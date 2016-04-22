@@ -1,4 +1,5 @@
 LAYOUT ?= layout_qwerty_alt
+USB ?= /dev/ttyU0
 
 MCU=atmega32u4
 F_CPU=16000000
