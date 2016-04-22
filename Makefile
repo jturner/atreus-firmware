@@ -1,5 +1,4 @@
-LAYOUT ?= qwerty_alt
-USB ?= /dev/ttyU0
+LAYOUT ?= layout_qwerty_alt
 
 MCU=atmega32u4
 F_CPU=16000000
@@ -16,7 +15,7 @@ clean:
 	@rm -f ${TARGET} ${TARGET}.hex *.o
 
 layout.h: ${LAYOUT_DEPENDS}
-	@cp -n layout_${LAYOUT}.h layout.h
+	@cp ${LAYOUT}.h layout.h
 
 ${TARGET}.o: layout.h
 usb_keyboard.o: usb_keyboard.h
