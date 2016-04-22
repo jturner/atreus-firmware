@@ -1,10 +1,10 @@
 LAYOUT ?= layout_qwerty_alt
 USB ?= /dev/ttyU0
+SWAPCOLUMNS ?= no
 
 MCU=atmega32u4
 F_CPU=16000000
 TARGET=atreus
-SWAPCOLUMNS=no
 
 build: ${TARGET}.hex
 

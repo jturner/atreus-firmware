@@ -2,18 +2,11 @@
 
 This is the firmware for the [Atreus keyboard](https://github.com/technomancy/atreus).
 
-**Notice**: this codebase should be considered deprecated; the
-recommendation going forward is to use the
-[TMK firmware](https://github.com/technomancy/tmk_keyboard/tree/atreus)
-instead. However, this codebase is still of interest to people who
-want to read the codebase since it is much simpler and easier to
-understand than TMK, where the support for additional keyboards and
-many advanced features make the code difficult to read.
+This is my ([jturner](https://github.com/jturner)) personal fork of the
+codebase.
 
 This branch is specific to the Atreus variant that uses the
-[A-Star Micro](http://www.pololu.com/product/3101). Earlier versions
-used the [Teensy 2](http://pjrc.com/store/teensy.html); these should
-use the `teensy2` branch of this repository.
+[A-Star Micro](http://www.pololu.com/product/3101).
 
 ## Layout
 
@@ -38,8 +31,8 @@ brings it back to the first layer.
 
     insert home up   end   pgup      ||      up     F7    F8    F9   F10
      del   left down right pgdn      ||     down    F4    F5    F6   F11
-                                     ||             F1    F2    F3   F12
-               super shift bksp ctrl || alt space   L0             reset
+                           reset     ||             F1    F2    F3   F12
+               super shift bksp ctrl || alt space   L0
 
 If you want easier access to the arrow keys, you can try the
 `qwerty_alt` layout, which puts them on the fn layer:
@@ -63,112 +56,20 @@ Install
 [gcc-avr](http://www.nongnu.org/avr-libc/user-manual/install\_tools.html)
 and [avrdude](http://www.nongnu.org/avrdude/).
 
-On Debian-based systems:
+On OpenBSD:
 
-    $ sudo apt-get install avrdude gcc-avr avr-libc
+    $ doas pkg_add avrdude gcc-avr avr-libc
 
-Some linux-based systems will need a udev rule to grant permissions to
-the USB device for uploading firmware.
-
-    $ sudo make udev
-
-On Mac OS X with Homebrew:
-
-    $ brew tap osx-cross/avr
-    $ brew install avr-libc
-    $ brew install avrdude --with-usb
-
-If you don't want to use Homebrew you can instead download
-[Crosspack for AVR](https://www.obdev.at/products/crosspack/index.html).
-
-Run `make upload` with the keyboard plugged in, and then activate the
-bootloader with reset (see below). Depending on your OS, it may expose
-the USB device somewhere other than the default of `/dev/ttyACM0`; if
-so you can run `make upload USB=/dev/cu.usbmodem1411` etc. If you idle
-in the bootloader for 8 seconds without uploading, the controller will
-exit the bootloader and return to normal operation.
-
-If the upload does not complete, check the permissions on the USB
-device and ensure it's writeable by your user. You may need to run
-`sudo make udev` on some Linux-based systems to install a udev rule if
-the permissions aren't right.
-
-You can identify the USB device like so:
-
-```
-$ ls /dev > /tmp/dev-off # run this while the device is unplugged
-$ ls /dev > /tmp/dev-on # run this while the device is in bootloader mode
-$ diff /tmp/dev-off /tmp/dev-on
-```
+Activate the bootload with reset. Run `doas make upload`.
 
 To use another C layout, copy it to `layout.h`; for example `cp
 multidvorak.h layout.h`.
-
-Usually you won't be able to upload the firmware from a virtualized
-OS; the virtualization interferes with the USB connection. However,
-you can compile the `.hex` file on a virtualized OS and take the hex
-file to a physical host and upload it with `avrdude` without
-installing the full compiler toolchain.
-
-## Windows
-
-Start by installing the A-Star drivers, as
-[documented by Pololu](https://www.pololu.com/docs/0J61/6.1). Once the
-driver is installed and the device is plugged in, you can determine
-the correct port setting by resetting the controller and looking at
-the "Ports (COM & LPT)"
-[section of the Windows Device Manager](https://a.pololu-files.com/picture/0J5272.500.png);
-it should show up as "Pololu A-Star Micro 32U4" if you check within 8
-seconds of initiating a reset.
-
-You can install the whole development toolchain using
-[WinAVR](http://winavr.sourceforge.net/) to compile using `make upload
-[...]` with the instructions above.
-
-However, if the whole compiler setup is too complicated, it's also
-possible to download a
-[precompiled firmware](http://atreus.technomancy.us/atreus-qwerty.hex)
-containing the default layout and uploading it with the simpler
-[AVRDUDESS](http://blog.zakkemble.co.uk/avrdudess-a-gui-for-avrdude/).
-
-These are the steps to using AVRDUDESS:
-
-* pick "avr109" as the programmer
-* select "ATmega32u4" from the MCU section in the upper left
-* select the port in the upper left as found in the device manager
-* choose the .hex file you downloaded in the "flash" section
-* reset the microcontroller so that the LED is gently pulsing
-* press "go" under "flash"
-
-## Reset
-
-If you've already got the firmware loaded on the controller, you
-should have a key bound to reset; typically this is activated by
-jumping to layer 2 (`fn`+`ESC`) and then hitting `enter`.
-
-If your board has never before had
-[the firmware uploaded](http://www.pololu.com/docs/0J61/5.3), you will
-have to *hard reset* by connecting the `RST` pin to ground twice in
-under a second to jump to the bootloader. (This requires removing the
-back panel.)  For older models, `RST` and ground are exposed with
-hookup wire poking out of the bottom of the board, but for newer
-models they are the sixth and seventh pin down on the right-side row
-of microcontroller pins. For first-time uploads, hit reset before
-running `make upload`.
-
-If you are hacking the lower-level logic of the firmware, the reset
-key might not be reachable (due to bugs in layer functionality, etc)
-and you will have to initiate a manual reset as per above with the `RST` pin.
-
-Sometimes it can be tricky to get the timing right with the hard
-reset; it can take a few attempts when you are first uploading the
-firmware to a fresh board.
 
 ## Pinout
 
 This is the pinout for the PCB-based Atreus using an A-Star
 microcontroller. ([Mark 3](https://github.com/technomancy/atreus/blob/master/changelog.md)
-onwards.) The Teensy 2 variants use a different pinout.
+onwards.)
 
 Outputs:
 
@@ -189,10 +90,7 @@ Inputs:
 If you soldered the PCB in upside down, never fear! This can be fixed
 in the firmware without removing the switches and resoldering. Simply
 run `make SWAPCOLUMNS=yes USB=...` to use a reversed pinout
-configuration. A
-[pre-compiled firmware](https://atreus.technomancy.us/atreus-swapcolumns.hex)
-with the columns swapped is also available. You may need to run `make
-clean` before using this option.
+configuration. You may need to run `make clean` before using this option.
 
 ## Customizing Layout
 
@@ -237,13 +135,6 @@ necessary to go through a
 process as the switches settle. This means taking a few scans over the
 matrix and waiting until you get N successive reads of the same state
 before counting any single keypress or release as legitimate.
-
-## Problems
-
-There seem to be issues with [avrdude uploading the firmware from Ubuntu 14.04](https://arduino.stackexchange.com/questions/1380/sketches-not-uploading-to-micro-from-ubuntu-14-04).
-
-Occasionally there are issues when switching layers that a key pressed
-in one layer briefly sends a keycode for the layer you're switching to.
 
 ## License
 
