@@ -106,10 +106,10 @@ keypress will cause the function to be invoked.
 
 The `layouts` pointer should be set to an array of layouts. Every scan
 through the keyboard matrix will set the current layout to the
-`current_layout_number`th element of the `layouts` array. To make a
+`current_layout_number` of the element in the `layouts` array. To make a
 keybinding that changes the current layout use the `LAYER()` macro.
 
-However, most functions will be called the final pass where each
+However, most functions will be called in the final pass where each
 keypress is looked up in the currently active layout. That means if
 you have a function that changes the current layout, it needs to run
 sooner so it can affect regular keycode lookups. The `PRE_FUNCTION()`
