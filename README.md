@@ -45,6 +45,7 @@ If you want easier access to the arrow keys, you can try the
 Further alternate layouts are included; see "Customizing Layout" below
 for making your own.
 
+* workman
 * colemak
 * softdvorak (assumes the OS is set to dvorak, and shuffles punctuation accordingly)
 * hardwaredvorak (lets you type in dvorak even if the OS is set to qwerty)
