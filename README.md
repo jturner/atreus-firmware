@@ -59,7 +59,7 @@ and [avrdude](http://www.nongnu.org/avrdude/).
 
 On OpenBSD:
 
-    $ doas pkg_add avrdude gcc-avr avr-libc
+    $ doas pkg_add avrdude avr-libc
 
 Activate the bootload with reset. Run `doas make upload`.
 
