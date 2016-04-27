@@ -21,9 +21,9 @@ unshifted, and all the modifiers are on the bottom row:
 The numbers and most of the punctuation are on the fn layer with a
 numpad-style arrangement under the right hand:
 
-     !     @     {     }     |       ||     pgup    7     8     9    *
-     #     $     (     )     `       ||     pgdn    4     5     6    +
-     %     ^     [     ]     ~       ||       &     1     2     3    \
+     !    @     up     {    }        ||     pgup    7     8     9    *
+     #  left   down  right  $        ||     pgdn    4     5     6    +
+     [    ]      (     )    &        ||       `     1     2     3    \
     L2  insert super shift bksp ctrl || alt space   fn    .     0    =
 
 The `L2` key switches it to the function layer, and tapping `L0` here
@@ -34,22 +34,10 @@ brings it back to the first layer.
                            reset     ||             F1    F2    F3   F12
                super shift bksp ctrl || alt space   L0
 
-If you want easier access to the arrow keys, you can try the
-`qwerty_alt` layout, which puts them on the fn layer:
-
-     !    @     up     {    }        ||     pgup    7     8     9    *
-     #  left   down  right  $        ||     pgdn    4     5     6    +
-     [    ]      (     )    &        ||       `     1     2     3    \
-    L2  insert super shift bksp ctrl || alt space   fn    .     0    =
-
 Further alternate layouts are included; see "Customizing Layout" below
 for making your own.
 
-* workman
-* colemak
-* softdvorak (assumes the OS is set to dvorak, and shuffles punctuation accordingly)
-* hardwaredvorak (lets you type in dvorak even if the OS is set to qwerty)
-* multidvorak (combines softdvorak and hardwaredvorak)
+* [workman](http://www.workmanlayout.com/)
 
 ## Usage
 
@@ -61,10 +49,10 @@ On OpenBSD:
 
     $ doas pkg_add avrdude avr-libc
 
-Activate the bootload with reset. Run `doas make upload`.
+Activate the bootloader with reset. Run `doas make upload`.
 
 To use another C layout, copy it to `layout.h`; for example `cp
-multidvorak.h layout.h`.
+layout_workman.h layout.h`.
 
 ## Pinout
 
