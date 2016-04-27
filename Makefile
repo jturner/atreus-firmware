@@ -1,4 +1,4 @@
-LAYOUT ?= layout_qwerty_alt
+LAYOUT ?= layout_qwerty
 USB ?= /dev/ttyU0
 SWAPCOLUMNS ?= no
 
