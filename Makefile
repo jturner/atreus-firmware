@@ -6,7 +6,7 @@ MCU=atmega32u4
 F_CPU=16000000
 TARGET=atreus
 
-build: ${TARGET}.hex
+all: ${TARGET}.hex
 
 upload: ${TARGET}.hex
 	while [ ! -r ${USB} ]; do sleep 1; done; \
@@ -34,3 +34,5 @@ ${TARGET}.hex: ${TARGET}
 .else
 	avr-gcc -std=gnu99 -Os -D F_CPU=${F_CPU}UL -mmcu=${MCU} -c -o $@ $<
 .endif
+
+.PHONY: all clean upload
