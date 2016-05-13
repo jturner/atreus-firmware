@@ -13,9 +13,7 @@
 
 void reset(void);
 
-// set this for layer changes that need to persist beyond one cycle
 int current_layer_number = 0;
-// this gets reset every cycle
 unsigned int *current_layer;
 
 #define ROW_COUNT 4
@@ -55,8 +53,6 @@ int last_presses[KEY_COUNT];
 #define ALT(key)    (0x4000 + (key))
 #define GUI(key)    (0x8000 + (key))
 
-/* LAYERS and FUNCTIONS are pessimistic, there's 4095 unused numbers between
- * the USB_MAX_KEY and the CTRL mask bit.  */
 #define LAYERS 64
 #define FUNCTIONS 255
 
@@ -71,14 +67,8 @@ int last_presses[KEY_COUNT];
 #define FUNCTION(number)      (MIN_FUNCTION     + (number))
 #define PRE_FUNCTION(number)  (MIN_PRE_FUNCTION + (number))
 
-// layout.h must define:
-// * layers: array of int[KEY_COUNT]
-// * layer_functions: array of void function pointers
-// ... plus any functions included in layer_functions
-// per_cycle void function callback
 #include "layout.h"
 
-
 // Matrix scanning logic
 
 void record(int col, int row) {
@@ -113,7 +103,6 @@ void scan_rows() {
   };
 };
 
-
 // Cycle functions
 
 void debounce(int passes_remaining) {
@@ -183,7 +172,6 @@ void calculate_presses() {
   };
 };
 
-
 // Top level stuff
 
 void init() {
