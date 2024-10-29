@@ -5,6 +5,8 @@ This is the firmware for the [Atreus keyboard](https://github.com/technomancy/at
 This is my ([jturner](https://github.com/jturner)) personal fork of the
 codebase.
 
+My fork has moved to sourcehut: https://git.sr.ht/~jturner/atreus-firmware
+
 This branch is specific to the Atreus variant that uses the
 [A-Star Micro](http://www.pololu.com/product/3101).
 
